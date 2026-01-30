@@ -65,6 +65,14 @@ export async function loginAction(formData: FormData): Promise<AuthResult> {
 
     // Attempt authentication
     const supabase = await createClient();
+
+    if (!supabase) {
+        return {
+            success: false,
+            error: 'Database not configured. Using demo mode (auth unavailable).',
+        };
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
         email,
         password,

@@ -25,9 +25,8 @@ export function createClient() {
 
     // Runtime check for required environment variables
     if (!supabaseUrl || !supabaseAnonKey) {
-        throw new Error(
-            'Missing Supabase environment variables. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in .env.local'
-        );
+        console.error('[Supabase] Missing environment variables. Client client not initialized.');
+        return null;
     }
 
     return createBrowserClient(supabaseUrl, supabaseAnonKey);

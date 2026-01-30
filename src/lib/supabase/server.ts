@@ -18,27 +18,25 @@ import { cookies } from 'next/headers';
  * Creates a Supabase client for server-side operations.
  * Manages authentication cookies automatically.
  * 
- * @returns Supabase server client instance
- * @throws Error if environment variables are not configured
+ * @returns Supabase server client instance, or null if not configured
  */
 export async function createClient() {
-    const cookieStore = await cookies();
-
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    // Runtime check for required environment variables
+    // Gracefully handle missing environment variables
+    // This allows pages to render with demo data if Supabase is not configured
     if (!supabaseUrl || !supabaseAnonKey) {
-        throw new Error(
-            'Missing Supabase environment variables. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in .env.local'
-        );
+        console.warn('[Supabase] Environment variables not configured. Using demo mode.');
+        return null;
     }
+
+    const cookieStore = await cookies();
 
     return createServerClient(supabaseUrl, supabaseAnonKey, {
         cookies: {
             /**
              * Retrieves a cookie by name from the request.
-             * Cookies are automatically handled by Next.js with HttpOnly flag.
              */
             get(name: string) {
                 return cookieStore.get(name)?.value;
@@ -46,27 +44,23 @@ export async function createClient() {
 
             /**
              * Sets a cookie with secure options.
-             * Note: In Server Components, we cannot set cookies.
-             * This is handled by the middleware for authentication flows.
              */
             set(name: string, value: string, options: CookieOptions) {
                 try {
                     cookieStore.set({ name, value, ...options });
                 } catch {
-                    // The `set` method is called from a Server Component.
-                    // This can be ignored if you have middleware refreshing sessions.
+                    // Ignored in Server Components - middleware handles this
                 }
             },
 
             /**
-             * Removes a cookie by setting its value to empty and maxAge to 0.
+             * Removes a cookie.
              */
             remove(name: string, options: CookieOptions) {
                 try {
                     cookieStore.set({ name, value: '', ...options });
                 } catch {
-                    // The `remove` method is called from a Server Component.
-                    // This can be ignored if you have middleware refreshing sessions.
+                    // Ignored in Server Components - middleware handles this
                 }
             },
         },
