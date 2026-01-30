@@ -132,6 +132,13 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
 
     const supabase = await createClient();
 
+    if (!supabase) {
+        return {
+            success: false,
+            error: 'Database not configured. Mode: Demo (auth unavailable).',
+        };
+    }
+
     // Create the auth user
     const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email,
@@ -185,6 +192,8 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
 // -----------------------------------------------------------------------------
 export async function logoutAction(): Promise<void> {
     const supabase = await createClient();
-    await supabase.auth.signOut();
+    if (supabase) {
+        await supabase.auth.signOut();
+    }
     redirect('/login');
 }

@@ -52,6 +52,10 @@ export async function createIssueAction(formData: FormData): Promise<ActionResul
 
     const supabase = await createClient();
 
+    if (!supabase) {
+        return { success: false, error: 'Database not configured. Mode: Demo.' };
+    }
+
     // Verify authentication
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
@@ -146,6 +150,10 @@ export async function addCommentAction(
     }
 
     const supabase = await createClient();
+
+    if (!supabase) {
+        return { success: false, error: 'Database not configured. Mode: Demo.' };
+    }
 
     // Verify authentication
     const { data: { user }, error: authError } = await supabase.auth.getUser();

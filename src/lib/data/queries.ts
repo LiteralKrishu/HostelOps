@@ -4,6 +4,7 @@
  * =============================================================================
  * Server-side data fetching functions for common database queries.
  * Uses Supabase server client with RLS for secure data access.
+ * Handles "Demo Mode" (missing Supabase config) gracefully.
  * =============================================================================
  */
 import { createClient } from '@/lib/supabase/server';
@@ -25,6 +26,8 @@ import type {
  */
 export async function getCurrentUserProfile(): Promise<Profile | null> {
     const supabase = await createClient();
+    if (!supabase) return null;
+
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) return null;
@@ -43,6 +46,8 @@ export async function getCurrentUserProfile(): Promise<Profile | null> {
  */
 export async function getProfileById(id: string): Promise<Profile | null> {
     const supabase = await createClient();
+    if (!supabase) return null;
+
     const { data } = await supabase
         .from('profiles')
         .select('*')
@@ -57,6 +62,8 @@ export async function getProfileById(id: string): Promise<Profile | null> {
  */
 export async function getStaffMembers(): Promise<Profile[]> {
     const supabase = await createClient();
+    if (!supabase) return [];
+
     const { data } = await supabase
         .from('profiles')
         .select('*')
@@ -75,6 +82,8 @@ export async function getStaffMembers(): Promise<Profile[]> {
  */
 export async function getUserIssues(): Promise<Issue[]> {
     const supabase = await createClient();
+    if (!supabase) return [];
+
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) return [];
@@ -97,6 +106,7 @@ export async function getAllIssues(filters?: {
     hostel?: string;
 }): Promise<IssueWithRelations[]> {
     const supabase = await createClient();
+    if (!supabase) return [];
 
     let query = supabase
         .from('issues')
@@ -126,6 +136,7 @@ export async function getAllIssues(filters?: {
  */
 export async function getIssueById(id: string): Promise<IssueWithRelations | null> {
     const supabase = await createClient();
+    if (!supabase) return null;
 
     const { data } = await supabase
         .from('issues')
@@ -145,6 +156,7 @@ export async function getIssueById(id: string): Promise<IssueWithRelations | nul
  */
 export async function getIssueComments(issueId: string): Promise<CommentWithProfile[]> {
     const supabase = await createClient();
+    if (!supabase) return [];
 
     const { data } = await supabase
         .from('comments')
@@ -163,6 +175,8 @@ export async function getIssueComments(issueId: string): Promise<CommentWithProf
  */
 export async function getIssueStats() {
     const supabase = await createClient();
+    if (!supabase) return { total: 0, pending: 0, resolved: 0, emergency: 0 };
+
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
@@ -206,6 +220,7 @@ export async function getIssueStats() {
  */
 export async function getAnnouncements(limit?: number): Promise<Announcement[]> {
     const supabase = await createClient();
+    if (!supabase) return [];
 
     const profile = await getCurrentUserProfile();
 
@@ -236,6 +251,7 @@ export async function getAnnouncements(limit?: number): Promise<Announcement[]> 
  */
 export async function getLostFoundItems(type?: 'lost' | 'found'): Promise<LostFoundItem[]> {
     const supabase = await createClient();
+    if (!supabase) return [];
 
     let query = supabase
         .from('lost_found_items')

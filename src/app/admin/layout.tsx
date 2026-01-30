@@ -24,6 +24,27 @@ export default async function AdminLayout({
 }) {
     // Validate session and admin role
     const supabase = await createClient();
+
+    if (!supabase) {
+        const demoAdmin = {
+            id: 'demo-admin',
+            full_name: 'Demo Admin',
+            role: 'admin' as const,
+            email: 'admin@demo.com',
+        };
+
+        return (
+            <SidebarProvider>
+                <AdminSidebar user={demoAdmin} />
+                <SidebarInset>
+                    <main className="flex-1 min-h-screen bg-slate-50 dark:bg-slate-900">
+                        {children}
+                    </main>
+                </SidebarInset>
+            </SidebarProvider>
+        );
+    }
+
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (error || !user) {

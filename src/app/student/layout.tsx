@@ -24,6 +24,29 @@ export default async function StudentLayout({
 }) {
     // Validate session
     const supabase = await createClient();
+
+    if (!supabase) {
+        const demoStudent = {
+            id: 'demo-student',
+            full_name: 'Demo Student',
+            role: 'student' as const,
+            hostel: 'Demo Hostel',
+            block: 'A',
+            room: '101',
+        };
+
+        return (
+            <SidebarProvider>
+                <StudentSidebar user={demoStudent} />
+                <SidebarInset>
+                    <main className="flex-1 min-h-screen bg-slate-50 dark:bg-slate-900">
+                        {children}
+                    </main>
+                </SidebarInset>
+            </SidebarProvider>
+        );
+    }
+
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (error || !user) {
