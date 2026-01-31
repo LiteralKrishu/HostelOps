@@ -19,6 +19,7 @@ create table if not exists profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   full_name text not null,
   role text check (role in ('student', 'admin', 'management', 'staff')) not null default 'student',
+  requested_role text check (requested_role in ('admin', 'management', 'staff')), -- Role requested during admin signup (null for students)
   hostel text not null,
   block text,
   room text,

@@ -78,14 +78,16 @@ export async function registerAdminAction(formData: FormData): Promise<AdminAuth
         };
     }
 
-    // Create profile with is_approved = false (pending approval)
+    // Create profile with role='student' (actual role assigned on approval)
+    // Use upsert because the DB trigger might have already created a profile
     if (authData.user) {
-        const { error: profileError } = await supabase.from('profiles').insert({
+        const { error: profileError } = await supabase.from('profiles').upsert({
             id: authData.user.id,
             full_name: fullName,
-            role: role, // admin, management, or staff
+            role: 'student', // Keep as student until approved
+            requested_role: role, // Store the requested admin/management/staff role
             hostel,
-            is_approved: false, // Requires manual approval for all admin roles
+            is_approved: false, // Requires manual approval
         });
 
         if (profileError) {
@@ -135,15 +137,19 @@ export async function loginAdminAction(formData: FormData): Promise<AdminAuthRes
         };
     }
 
-    // Verify the user is an admin/management/staff
+    // Verify the user is an admin/management/staff (approved or pending)
     if (data.user) {
         const { data: profile } = await supabase
             .from('profiles')
-            .select('role, is_approved')
+            .select('role, requested_role, is_approved')
             .eq('id', data.user.id)
             .single();
 
-        if (!profile || !['admin', 'management', 'staff'].includes(profile.role)) {
+        // Check if this is an admin user (either approved with role, or pending with requested_role)
+        const isAdminRole = profile && ['admin', 'management', 'staff'].includes(profile.role);
+        const hasPendingAdminRole = profile && profile.requested_role && ['admin', 'management', 'staff'].includes(profile.requested_role);
+
+        if (!profile || (!isAdminRole && !hasPendingAdminRole)) {
             // Sign out non-admin users
             await supabase.auth.signOut();
             return {
@@ -159,6 +165,16 @@ export async function loginAdminAction(formData: FormData): Promise<AdminAuthRes
             return {
                 success: false,
                 error: 'Your account is pending approval. Please contact the system administrator.',
+                pendingApproval: true,
+            };
+        }
+
+        // Approved but role not yet assigned (edge case - shouldn't happen if approval process is correct)
+        if (!isAdminRole && hasPendingAdminRole) {
+            await supabase.auth.signOut();
+            return {
+                success: false,
+                error: 'Your role assignment is pending. Please contact the system administrator.',
                 pendingApproval: true,
             };
         }

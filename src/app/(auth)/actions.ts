@@ -191,9 +191,10 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
         };
     }
 
-    // Create the profile (role is always 'student' for self-registration)
+    // Create profile
     if (authData.user) {
-        const { error: profileError } = await supabase.from('profiles').insert({
+        // Use upsert to handle potential race condition with DB trigger
+        const { error: profileError } = await supabase.from('profiles').upsert({
             id: authData.user.id,
             full_name: fullName,
             role: 'student', // SECURITY: Role is enforced server-side
@@ -203,9 +204,8 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
         });
 
         if (profileError) {
-            console.error('[Register] Profile creation failed:', profileError.message);
-            // User was created but profile failed - this is a problem
-            // In production, you might want to delete the auth user or retry
+            // Log error but allow auth usage (student can update profile later)
+            console.error('Profile creation failed:', profileError.message);
         }
     }
 
