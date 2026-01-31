@@ -1,32 +1,42 @@
 /**
  * =============================================================================
- * REGISTER PAGE
+ * REGISTER PAGE - VIBRANT DESIGN
  * =============================================================================
- * Modern registration page matching the login page aesthetic.
- * Collects user details for student account creation.
+ * Modern registration page matching the landing page aesthetic.
+ * Features animated gradient background with violet/fuchsia theme.
  * =============================================================================
  */
 import Link from 'next/link';
 import { RegisterForm } from './register-form';
+import { ArrowLeft } from 'lucide-react';
 
 export default function RegisterPage() {
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center p-4 py-12 relative overflow-hidden bg-slate-950">
             {/* Animated gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20" />
-                {/* Animated orbs */}
-                <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
+            <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-0 -left-40 w-[600px] h-[600px] bg-gradient-to-br from-violet-600/30 to-fuchsia-600/20 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-gradient-to-br from-pink-500/25 to-rose-600/15 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className="absolute bottom-0 left-1/3 w-[700px] h-[400px] bg-gradient-to-br from-emerald-500/20 to-teal-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]" />
             </div>
 
             {/* Register Card */}
-            <div className="relative w-full max-w-lg">
+            <div className="relative z-10 w-full max-w-lg">
+                {/* Back to home */}
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition-colors"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Home
+                </Link>
+
                 {/* Glassmorphism card */}
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8">
+                <div className="p-8 rounded-3xl bg-slate-900/80 border border-violet-500/20 backdrop-blur-xl">
                     {/* Logo & Header */}
                     <div className="text-center mb-6">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 shadow-lg">
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 mb-4 shadow-lg shadow-violet-500/30">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
@@ -42,7 +52,7 @@ export default function RegisterPage() {
                             </svg>
                         </div>
                         <h1 className="text-2xl font-bold text-white mb-2">Create Account</h1>
-                        <p className="text-slate-300">Join HostelOps as a student</p>
+                        <p className="text-slate-400">Join HostelOps as a student</p>
                     </div>
 
                     {/* Register Form */}
@@ -54,17 +64,13 @@ export default function RegisterPage() {
                             Already have an account?{' '}
                             <Link
                                 href="/login"
-                                className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+                                className="text-violet-400 hover:text-violet-300 font-medium transition-colors"
                             >
                                 Sign in
                             </Link>
                         </p>
                     </div>
                 </div>
-
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl blur-2xl opacity-50" />
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl blur-2xl opacity-40" />
             </div>
         </div>
     );

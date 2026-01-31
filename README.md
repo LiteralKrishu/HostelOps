@@ -24,18 +24,21 @@
 - **Issue Tracking** – Real-time status updates on reported issues
 - **Announcements** – View hostel-wide notices and updates
 - **Lost & Found** – Report and search for lost/found items
+- **Profile Management** – View and manage personal details
 
-### For Administrators
+### For Administrators / Management / Staff
 - **Dashboard Analytics** – KPIs, issue distribution charts, emergency alerts
 - **Issue Management** – Assign staff, update status, set priorities
 - **Staff Management** – Track performance metrics and assignments
 - **Announcements** – Create and manage hostel notices
+- **Manual Approval System** – Admin accounts require approval before access
 
 ### Security Features
 - 🔐 **Rate Limiting** – IP-based protection against brute force attacks
 - ✅ **Input Validation** – Zod schemas with strict mode
 - 🛡️ **OWASP Compliance** – Security headers, password policies, session management
 - 🔒 **Row Level Security** – Database-level access control via Supabase RLS
+- 👤 **Manual Admin Approval** – Staff accounts require manual approval via Supabase dashboard
 
 ---
 
@@ -64,7 +67,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/HostelOps.git
+   git clone https://github.com/LiteralKrishu/HostelOps.git
    cd HostelOps
    ```
 
@@ -97,14 +100,36 @@
 
 ---
 
+## 👤 User Roles
+
+| Role           | Access                                           | Approval Required       |
+| -------------- | ------------------------------------------------ | ----------------------- |
+| **Student**    | Report issues, view announcements, lost & found  | Auto-approved on signup |
+| **Admin**      | Full system access, manage all features          | ✅ Manual approval       |
+| **Management** | Issue oversight, announcements, staff management | ✅ Manual approval       |
+| **Staff**      | Handle assigned issues, update statuses          | ✅ Manual approval       |
+
+### Approving Staff Accounts
+
+1. Go to **Supabase Dashboard** → **Table Editor** → **profiles**
+2. Find the user with `role = admin/management/staff`
+3. Set `is_approved` to `true`
+4. Save
+
+---
+
 ## 📁 Project Structure
 
 ```
 HostelOps/
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── (auth)/             # Authentication pages
+│   │   ├── (auth)/             # Student authentication
+│   │   │   ├── login/          # Student login
+│   │   │   └── register/       # Student registration
 │   │   ├── admin/              # Admin portal
+│   │   │   ├── login/          # Admin login
+│   │   │   └── register/       # Admin registration (with role selector)
 │   │   ├── student/            # Student portal
 │   │   ├── layout.tsx          # Root layout
 │   │   └── page.tsx            # Landing page
@@ -141,6 +166,20 @@ HostelOps/
 2. Set **Site URL** to your Vercel domain: `https://your-app.vercel.app`
 3. Add **Redirect URLs**: `https://your-app.vercel.app/**`
 
+### Update Existing Database
+
+If you already have the database set up, run this SQL to add the approval system:
+
+```sql
+-- Add is_approved column
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_approved boolean DEFAULT true;
+
+-- Update role constraint to include 'admin'
+ALTER TABLE profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
+ALTER TABLE profiles ADD CONSTRAINT profiles_role_check 
+  CHECK (role IN ('student', 'admin', 'management', 'staff'));
+```
+
 ---
 
 ## 🔐 Security
@@ -155,6 +194,7 @@ This application follows OWASP security best practices:
 | SQL Injection    | Parameterized queries via Supabase                     |
 | Session Security | HttpOnly cookies, token rotation                       |
 | Password Policy  | Min 8 chars, uppercase, lowercase, digit, special char |
+| Manual Approval  | Admin/Staff accounts require manual approval           |
 
 ---
 
@@ -166,6 +206,17 @@ npm run build    # Build for production
 npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
+
+---
+
+## 🎨 Design
+
+The application features a modern, vibrant dark theme with:
+- **Dark gradient backgrounds** with animated glowing orbs
+- **Glassmorphism cards** with subtle borders
+- **Violet/Fuchsia theme** for student pages
+- **Amber/Orange theme** for admin pages
+- **Responsive design** for all screen sizes
 
 ---
 

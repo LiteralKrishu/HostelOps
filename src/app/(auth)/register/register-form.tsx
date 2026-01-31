@@ -38,12 +38,12 @@ function PasswordStrength({ password }: { password: string }) {
                     <div
                         key={level}
                         className={`h-1 flex-1 rounded-full transition-colors ${strength >= level
-                                ? strength >= 4
-                                    ? 'bg-green-500'
-                                    : strength >= 3
-                                        ? 'bg-yellow-500'
-                                        : 'bg-red-500'
-                                : 'bg-white/20'
+                            ? strength >= 4
+                                ? 'bg-green-500'
+                                : strength >= 3
+                                    ? 'bg-yellow-500'
+                                    : 'bg-red-500'
+                            : 'bg-white/20'
                             }`}
                     />
                 ))}
@@ -74,7 +74,7 @@ function SubmitButton() {
         <Button
             type="submit"
             disabled={pending}
-            className="w-full h-12 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-300"
+            className="w-full h-12 bg-gradient-to-r from-violet-500 to-fuchsia-600 hover:from-violet-600 hover:to-fuchsia-700 text-white font-medium rounded-xl shadow-lg shadow-violet-500/25 transition-all duration-300"
         >
             {pending ? (
                 <>
@@ -109,7 +109,7 @@ export function RegisterForm() {
 
     // Input class for consistency
     const inputClass =
-        'pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-indigo-400 focus:ring-indigo-400/20';
+        'pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-violet-400 focus:ring-violet-400/20';
 
     return (
         <form action={handleSubmit} className="space-y-4">

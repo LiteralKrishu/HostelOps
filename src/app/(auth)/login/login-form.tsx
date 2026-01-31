@@ -24,7 +24,7 @@ function SubmitButton() {
         <Button
             type="submit"
             disabled={pending}
-            className="w-full h-12 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium rounded-xl shadow-lg shadow-blue-500/25 transition-all duration-300"
+            className="w-full h-12 bg-gradient-to-r from-violet-500 to-fuchsia-600 hover:from-violet-600 hover:to-fuchsia-700 text-white font-medium rounded-xl shadow-lg shadow-violet-500/25 transition-all duration-300"
         >
             {pending ? (
                 <>
@@ -80,7 +80,7 @@ export function LoginForm() {
                         placeholder="you@example.com"
                         autoComplete="email"
                         required
-                        className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-blue-400 focus:ring-blue-400/20"
+                        className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-violet-400 focus:ring-violet-400/20"
                     />
                 </div>
                 {fieldErrors.email && (
@@ -96,7 +96,7 @@ export function LoginForm() {
                     </Label>
                     <a
                         href="#"
-                        className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                        className="text-sm text-violet-400 hover:text-violet-300 transition-colors"
                     >
                         Forgot password?
                     </a>
@@ -110,7 +110,7 @@ export function LoginForm() {
                         placeholder="••••••••"
                         autoComplete="current-password"
                         required
-                        className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-blue-400 focus:ring-blue-400/20"
+                        className="pl-10 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-400 rounded-xl focus:border-violet-400 focus:ring-violet-400/20"
                     />
                 </div>
                 {fieldErrors.password && (
