@@ -1,9 +1,9 @@
 /**
  * =============================================================================
- * STUDENT LAYOUT
+ * STUDENT LAYOUT - DARK GRADIENT THEME
  * =============================================================================
  * Main layout for student portal with sidebar navigation.
- * Includes session validation and user data fetching.
+ * Features dark gradient background matching landing page.
  * =============================================================================
  */
 import { redirect } from 'next/navigation';
@@ -36,14 +36,24 @@ export default async function StudentLayout({
         };
 
         return (
-            <SidebarProvider>
-                <StudentSidebar user={demoStudent} />
-                <SidebarInset>
-                    <main className="flex-1 min-h-screen bg-slate-50 dark:bg-slate-900">
-                        {children}
-                    </main>
-                </SidebarInset>
-            </SidebarProvider>
+            <div className="min-h-screen bg-slate-950 relative">
+                {/* Background Gradient */}
+                <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                    <div className="absolute top-0 -left-40 w-[600px] h-[600px] bg-gradient-to-br from-violet-600/20 to-fuchsia-600/10 rounded-full blur-[120px]" />
+                    <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-gradient-to-br from-cyan-500/15 to-blue-600/10 rounded-full blur-[100px]" />
+                    <div className="absolute bottom-0 left-1/3 w-[700px] h-[400px] bg-gradient-to-br from-emerald-500/10 to-teal-600/5 rounded-full blur-[120px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:50px_50px]" />
+                </div>
+
+                <SidebarProvider>
+                    <StudentSidebar user={demoStudent} />
+                    <SidebarInset>
+                        <main className="flex-1 min-h-screen relative z-10">
+                            {children}
+                        </main>
+                    </SidebarInset>
+                </SidebarProvider>
+            </div>
         );
     }
 
@@ -71,13 +81,23 @@ export default async function StudentLayout({
     };
 
     return (
-        <SidebarProvider>
-            <StudentSidebar user={userProfile} />
-            <SidebarInset>
-                <main className="flex-1 min-h-screen bg-slate-50 dark:bg-slate-900">
-                    {children}
-                </main>
-            </SidebarInset>
-        </SidebarProvider>
+        <div className="min-h-screen bg-slate-950 relative">
+            {/* Background Gradient */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-0 -left-40 w-[600px] h-[600px] bg-gradient-to-br from-violet-600/20 to-fuchsia-600/10 rounded-full blur-[120px]" />
+                <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-gradient-to-br from-cyan-500/15 to-blue-600/10 rounded-full blur-[100px]" />
+                <div className="absolute bottom-0 left-1/3 w-[700px] h-[400px] bg-gradient-to-br from-emerald-500/10 to-teal-600/5 rounded-full blur-[120px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:50px_50px]" />
+            </div>
+
+            <SidebarProvider>
+                <StudentSidebar user={userProfile} />
+                <SidebarInset>
+                    <main className="flex-1 min-h-screen relative z-10">
+                        {children}
+                    </main>
+                </SidebarInset>
+            </SidebarProvider>
+        </div>
     );
 }

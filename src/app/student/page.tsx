@@ -1,19 +1,16 @@
 /**
  * =============================================================================
- * STUDENT DASHBOARD PAGE
+ * STUDENT DASHBOARD PAGE - DARK THEME
  * =============================================================================
- * Main dashboard for students showing:
- * - Quick stats
+ * Main dashboard for students featuring:
+ * - Quick stats with glassmorphism cards
  * - Recent issues
  * - Quick actions
+ * Matches landing page design aesthetic.
  * =============================================================================
  */
 import { createClient } from '@/lib/supabase/server';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import {
     Plus,
@@ -23,6 +20,7 @@ import {
     ArrowRight,
     Bell,
     Search,
+    Menu,
 } from 'lucide-react';
 
 // Priority color mapping
@@ -33,13 +31,13 @@ const priorityColors: Record<string, string> = {
     emergency: 'bg-red-500',
 };
 
-// Status badge variants
-const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-    reported: 'outline',
-    assigned: 'secondary',
-    in_progress: 'default',
-    resolved: 'default',
-    closed: 'secondary',
+// Status badge colors
+const statusColors: Record<string, string> = {
+    reported: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+    assigned: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    in_progress: 'bg-violet-500/20 text-violet-300 border-violet-500/30',
+    resolved: 'bg-green-500/20 text-green-300 border-green-500/30',
+    closed: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
 };
 
 export default async function StudentDashboard() {
@@ -146,11 +144,13 @@ export default async function StudentDashboard() {
     return (
         <>
             {/* Header */}
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
-                <SidebarTrigger className="-ml-1" />
-                <Separator orientation="vertical" className="mr-2 h-4" />
+            <header className="flex h-16 shrink-0 items-center gap-4 border-b border-white/5 bg-slate-900/50 backdrop-blur-sm px-6">
+                <SidebarTrigger className="-ml-1 text-slate-400 hover:text-white">
+                    <Menu className="h-5 w-5" />
+                </SidebarTrigger>
+                <div className="h-4 w-px bg-white/10" />
                 <div>
-                    <h1 className="font-semibold">Dashboard</h1>
+                    <h1 className="font-semibold text-white">Dashboard</h1>
                 </div>
             </header>
 
@@ -158,10 +158,10 @@ export default async function StudentDashboard() {
             <div className="flex-1 p-6">
                 {/* Welcome Section */}
                 <div className="mb-8">
-                    <h2 className="text-2xl font-bold tracking-tight">
+                    <h2 className="text-2xl font-bold tracking-tight text-white">
                         Welcome back! 👋
                     </h2>
-                    <p className="text-muted-foreground">
+                    <p className="text-slate-400">
                         Here&apos;s what&apos;s happening with your hostel issues.
                     </p>
                 </div>
@@ -169,191 +169,172 @@ export default async function StudentDashboard() {
                 {/* Quick Actions */}
                 <div className="grid gap-4 md:grid-cols-3 mb-8">
                     <Link href="/student/issues/new">
-                        <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Report Issue</CardTitle>
-                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div className="group p-5 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-violet-500/30 backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-violet-500/5">
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm font-medium text-white">Report Issue</span>
+                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-violet-500/30">
                                     <Plus className="h-5 w-5 text-white" />
                                 </div>
-                            </CardHeader>
-                            <CardContent>
-                                <p className="text-xs text-muted-foreground">
-                                    Submit a new issue in under 30 seconds
-                                </p>
-                            </CardContent>
-                        </Card>
+                            </div>
+                            <p className="text-xs text-slate-400">
+                                Submit a new issue in under 30 seconds
+                            </p>
+                        </div>
                     </Link>
 
                     <Link href="/student/lost-found">
-                        <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Lost & Found</CardTitle>
-                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div className="group p-5 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-emerald-500/30 backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-emerald-500/5">
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm font-medium text-white">Lost & Found</span>
+                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-emerald-500/30">
                                     <Search className="h-5 w-5 text-white" />
                                 </div>
-                            </CardHeader>
-                            <CardContent>
-                                <p className="text-xs text-muted-foreground">
-                                    Report or find lost items
-                                </p>
-                            </CardContent>
-                        </Card>
+                            </div>
+                            <p className="text-xs text-slate-400">
+                                Report or find lost items
+                            </p>
+                        </div>
                     </Link>
 
                     <Link href="/student/announcements">
-                        <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Announcements</CardTitle>
-                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div className="group p-5 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-amber-500/30 backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-amber-500/5">
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm font-medium text-white">Announcements</span>
+                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/30">
                                     <Bell className="h-5 w-5 text-white" />
                                 </div>
-                            </CardHeader>
-                            <CardContent>
-                                <p className="text-xs text-muted-foreground">
-                                    View hostel updates
-                                </p>
-                            </CardContent>
-                        </Card>
+                            </div>
+                            <p className="text-xs text-slate-400">
+                                View hostel updates
+                            </p>
+                        </div>
                     </Link>
                 </div>
 
                 {/* Stats Cards */}
                 <div className="grid gap-4 md:grid-cols-3 mb-8">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Issues</CardTitle>
-                            <AlertCircle className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{stats.total}</div>
-                            <p className="text-xs text-muted-foreground">All time</p>
-                        </CardContent>
-                    </Card>
+                    <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-slate-400">Total Issues</span>
+                            <AlertCircle className="h-4 w-4 text-slate-500" />
+                        </div>
+                        <div className="text-3xl font-bold text-white">{stats.total}</div>
+                        <p className="text-xs text-slate-500">All time</p>
+                    </div>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+                    <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-slate-400">Pending</span>
                             <Clock className="h-4 w-4 text-yellow-500" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{stats.pending}</div>
-                            <p className="text-xs text-muted-foreground">Awaiting resolution</p>
-                        </CardContent>
-                    </Card>
+                        </div>
+                        <div className="text-3xl font-bold text-white">{stats.pending}</div>
+                        <p className="text-xs text-slate-500">Awaiting resolution</p>
+                    </div>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Resolved</CardTitle>
+                    <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-slate-400">Resolved</span>
                             <CheckCircle2 className="h-4 w-4 text-green-500" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{stats.resolved}</div>
-                            <p className="text-xs text-muted-foreground">Completed</p>
-                        </CardContent>
-                    </Card>
+                        </div>
+                        <div className="text-3xl font-bold text-white">{stats.resolved}</div>
+                        <p className="text-xs text-slate-500">Completed</p>
+                    </div>
                 </div>
 
                 {/* Recent Issues & Announcements Grid */}
                 <div className="grid gap-6 lg:grid-cols-2">
                     {/* Recent Issues */}
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between">
+                    <div className="rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm overflow-hidden">
+                        <div className="flex items-center justify-between p-5 border-b border-white/5">
                             <div>
-                                <CardTitle>Recent Issues</CardTitle>
-                                <CardDescription>Your latest reported issues</CardDescription>
+                                <h3 className="font-semibold text-white">Recent Issues</h3>
+                                <p className="text-xs text-slate-400">Your latest reported issues</p>
                             </div>
-                            <Button variant="ghost" size="sm" asChild>
-                                <Link href="/student/issues">
-                                    View all <ArrowRight className="ml-1 h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {recentIssues.length === 0 ? (
-                                    <p className="text-sm text-muted-foreground text-center py-8">
-                                        No issues reported yet.{' '}
-                                        <Link href="/student/issues/new" className="text-blue-500 hover:underline">
-                                            Report one now
-                                        </Link>
-                                    </p>
-                                ) : (
-                                    recentIssues.map((issue) => (
+                            <Link href="/student/issues" className="text-sm text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors">
+                                View all <ArrowRight className="h-4 w-4" />
+                            </Link>
+                        </div>
+                        <div className="p-3">
+                            {recentIssues.length === 0 ? (
+                                <p className="text-sm text-slate-500 text-center py-8">
+                                    No issues reported yet.{' '}
+                                    <Link href="/student/issues/new" className="text-violet-400 hover:underline">
+                                        Report one now
+                                    </Link>
+                                </p>
+                            ) : (
+                                <div className="space-y-2">
+                                    {recentIssues.map((issue) => (
                                         <Link
                                             key={issue.id}
                                             href={`/student/issues/${issue.id}`}
-                                            className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                                            className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
                                         >
                                             {/* Priority indicator */}
-                                            <div
-                                                className={`w-2 h-2 rounded-full ${priorityColors[issue.priority]}`}
-                                            />
+                                            <div className={`w-2 h-2 rounded-full ${priorityColors[issue.priority]}`} />
 
                                             {/* Issue info */}
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-medium truncate">{issue.title}</p>
-                                                <p className="text-xs text-muted-foreground">
-                                                    {issue.category} •{' '}
-                                                    {new Date(issue.created_at).toLocaleDateString()}
+                                                <p className="font-medium text-white truncate">{issue.title}</p>
+                                                <p className="text-xs text-slate-500">
+                                                    {issue.category} • {new Date(issue.created_at).toLocaleDateString()}
                                                 </p>
                                             </div>
 
                                             {/* Status badge */}
-                                            <Badge variant={statusVariant[issue.status]}>
+                                            <span className={`px-2 py-1 text-xs font-medium rounded-lg border ${statusColors[issue.status]}`}>
                                                 {issue.status.replace('_', ' ')}
-                                            </Badge>
+                                            </span>
                                         </Link>
-                                    ))
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
 
                     {/* Announcements */}
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between">
+                    <div className="rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm overflow-hidden">
+                        <div className="flex items-center justify-between p-5 border-b border-white/5">
                             <div>
-                                <CardTitle>Announcements</CardTitle>
-                                <CardDescription>Recent hostel updates</CardDescription>
+                                <h3 className="font-semibold text-white">Announcements</h3>
+                                <p className="text-xs text-slate-400">Recent hostel updates</p>
                             </div>
-                            <Button variant="ghost" size="sm" asChild>
-                                <Link href="/student/announcements">
-                                    View all <ArrowRight className="ml-1 h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {announcements.length === 0 ? (
-                                    <p className="text-sm text-muted-foreground text-center py-8">
-                                        No announcements at this time.
-                                    </p>
-                                ) : (
-                                    announcements.map((announcement) => (
+                            <Link href="/student/announcements" className="text-sm text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors">
+                                View all <ArrowRight className="h-4 w-4" />
+                            </Link>
+                        </div>
+                        <div className="p-3">
+                            {announcements.length === 0 ? (
+                                <p className="text-sm text-slate-500 text-center py-8">
+                                    No announcements at this time.
+                                </p>
+                            ) : (
+                                <div className="space-y-3">
+                                    {announcements.map((announcement) => (
                                         <div
                                             key={announcement.id}
-                                            className="p-3 rounded-lg border bg-muted/30"
+                                            className="p-4 rounded-xl bg-white/5 border border-white/5"
                                         >
                                             <div className="flex items-start gap-3">
-                                                <div className="h-8 w-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
-                                                    <Bell className="h-4 w-4 text-amber-600" />
+                                                <div className="h-8 w-8 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                                                    <Bell className="h-4 w-4 text-amber-400" />
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium">{announcement.title}</p>
-                                                    <p className="text-sm text-muted-foreground line-clamp-2">
+                                                    <p className="font-medium text-white">{announcement.title}</p>
+                                                    <p className="text-sm text-slate-400 line-clamp-2">
                                                         {announcement.content}
                                                     </p>
-                                                    <p className="text-xs text-muted-foreground mt-1">
+                                                    <p className="text-xs text-slate-500 mt-1">
                                                         {new Date(announcement.created_at).toLocaleDateString()}
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
-                                    ))
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
