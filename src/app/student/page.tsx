@@ -44,9 +44,8 @@ const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'o
 
 export default async function StudentDashboard() {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
 
-    // Fetch real data (falls back to demo data if tables don't exist)
+    // Fetch real data (falls back to demo data if tables don't exist or Supabase not configured)
     let stats = { total: 0, pending: 0, resolved: 0, emergency: 0 };
     let recentIssues: Array<{
         id: string;
@@ -63,38 +62,43 @@ export default async function StudentDashboard() {
         created_at: string;
     }> = [];
 
-    try {
-        // Attempt to fetch from database
-        if (user) {
-            const { data: issues } = await supabase
-                .from('issues')
-                .select('id, title, category, priority, status, created_at')
-                .eq('created_by', user.id)
-                .order('created_at', { ascending: false })
-                .limit(5);
+    // Only fetch if Supabase is configured
+    if (supabase) {
+        const { data: { user } } = await supabase.auth.getUser();
 
-            if (issues && issues.length > 0) {
-                recentIssues = issues;
-                stats = {
-                    total: issues.length,
-                    pending: issues.filter(i => ['reported', 'assigned', 'in_progress'].includes(i.status)).length,
-                    resolved: issues.filter(i => ['resolved', 'closed'].includes(i.status)).length,
-                    emergency: issues.filter(i => i.priority === 'emergency').length,
-                };
+        try {
+            // Attempt to fetch from database
+            if (user) {
+                const { data: issues } = await supabase
+                    .from('issues')
+                    .select('id, title, category, priority, status, created_at')
+                    .eq('created_by', user.id)
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+
+                if (issues && issues.length > 0) {
+                    recentIssues = issues;
+                    stats = {
+                        total: issues.length,
+                        pending: issues.filter(i => ['reported', 'assigned', 'in_progress'].includes(i.status)).length,
+                        resolved: issues.filter(i => ['resolved', 'closed'].includes(i.status)).length,
+                        emergency: issues.filter(i => i.priority === 'emergency').length,
+                    };
+                }
+
+                const { data: anns } = await supabase
+                    .from('announcements')
+                    .select('id, title, content, created_at')
+                    .order('created_at', { ascending: false })
+                    .limit(3);
+
+                if (anns && anns.length > 0) {
+                    announcements = anns;
+                }
             }
-
-            const { data: anns } = await supabase
-                .from('announcements')
-                .select('id, title, content, created_at')
-                .order('created_at', { ascending: false })
-                .limit(3);
-
-            if (anns && anns.length > 0) {
-                announcements = anns;
-            }
+        } catch {
+            // Database tables may not exist yet, use demo data
         }
-    } catch {
-        // Database tables may not exist yet, use demo data
     }
 
     // Demo data fallback

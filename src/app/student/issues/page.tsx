@@ -41,8 +41,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default async function IssuesListPage() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    // Using demo data - no Supabase needed for display
 
     // Mock data for demo (replace with real query when DB is set up)
     const issues = [

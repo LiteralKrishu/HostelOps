@@ -15,21 +15,30 @@ import { Building2 } from 'lucide-react';
 
 export default async function ReportIssuePage() {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
 
-    // Get user profile for location auto-fill
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('hostel, block, room')
-        .eq('id', user?.id)
-        .single();
-
-    // Default location info
-    const location = profile || {
+    // Demo mode fallback
+    let location = {
         hostel: 'Demo Hostel',
         block: 'A',
         room: '101',
     };
+
+    if (supabase) {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        // Get user profile for location auto-fill
+        if (user) {
+            const { data: profile } = await supabase
+                .from('profiles')
+                .select('hostel, block, room')
+                .eq('id', user.id)
+                .single();
+
+            if (profile) {
+                location = profile;
+            }
+        }
+    }
 
     return (
         <>
