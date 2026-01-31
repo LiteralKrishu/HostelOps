@@ -17,7 +17,7 @@
 
 <p align="center">
   <a href="https://drive.google.com/file/d/1fAb6_d0LLahT--Fc4fjxxGjtLxrM9X3E/view?usp=drive_link">
-    <strong>🎬 Watch Video Demo</strong>
+    <img src="https://img.shields.io/badge/🎥_Watch_Demo_Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Demo Video" />
   </a>
 </p>
 
@@ -115,12 +115,14 @@
 | **Management** | Issue oversight, announcements, staff management | ✅ Manual approval       |
 | **Staff**      | Handle assigned issues, update statuses          | ✅ Manual approval       |
 
-### Approving Staff Accounts
+### Approving Admin/Staff Accounts
 
 1. Go to **Supabase Dashboard** → **Table Editor** → **profiles**
-2. Find the user with `role = admin/management/staff`
-3. Set `is_approved` to `true`
-4. Save
+2. Find the user (they will have `role = student` but `requested_role = admin/management/staff`)
+3. Set `role` to the value in `requested_role`
+4. Set `is_approved` to `true`
+5. Clear `requested_role` (set to `NULL`)
+6. Save
 
 ---
 
@@ -133,9 +135,10 @@ HostelOps/
 │   │   ├── (auth)/             # Student authentication
 │   │   │   ├── login/          # Student login
 │   │   │   └── register/       # Student registration
-│   │   ├── admin/              # Admin portal
+│   │   ├── admin-auth/         # Admin authentication (Outside /admin layout)
 │   │   │   ├── login/          # Admin login
 │   │   │   └── register/       # Admin registration (with role selector)
+│   │   ├── admin/              # Admin portal
 │   │   ├── student/            # Student portal
 │   │   ├── layout.tsx          # Root layout
 │   │   └── page.tsx            # Landing page
@@ -177,13 +180,19 @@ HostelOps/
 If you already have the database set up, run this SQL to add the approval system:
 
 ```sql
--- Add is_approved column
-ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_approved boolean DEFAULT true;
+-- 1. Add requested_role column (for pending admin approvals)
+ALTER TABLE profiles 
+ADD COLUMN IF NOT EXISTS requested_role text 
+CHECK (requested_role IN ('admin', 'management', 'staff'));
 
--- Update role constraint to include 'admin'
-ALTER TABLE profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
-ALTER TABLE profiles ADD CONSTRAINT profiles_role_check 
-  CHECK (role IN ('student', 'admin', 'management', 'staff'));
+-- 2. Change is_approved default from TRUE to FALSE
+ALTER TABLE profiles 
+ALTER COLUMN is_approved SET DEFAULT false;
+
+-- 3. Fix existing students who might have is_approved = false
+UPDATE profiles 
+SET is_approved = true 
+WHERE role = 'student' AND is_approved = false;
 ```
 
 ---
