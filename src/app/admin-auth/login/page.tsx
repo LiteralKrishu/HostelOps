@@ -168,7 +168,7 @@ export default function AdminLoginPage() {
                         <div className="mt-8 pt-6 border-t border-amber-100">
                             <p className="text-center text-slate-500 text-sm">
                                 Need an account?{' '}
-                                <Link href="/admin/register" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
+                                <Link href="/admin-auth/register" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
                                     Register here
                                 </Link>
                             </p>

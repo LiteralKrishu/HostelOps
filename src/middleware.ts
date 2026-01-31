@@ -16,7 +16,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 // -----------------------------------------------------------------------------
 // ROUTE CONFIGURATION
 // -----------------------------------------------------------------------------
-const PUBLIC_ROUTES = ['/login', '/register', '/', '/admin/login', '/admin/register'];
+const PUBLIC_ROUTES = ['/login', '/register', '/', '/admin-auth/login', '/admin-auth/register'];
 const STUDENT_ROUTES = ['/student'];
 const ADMIN_ROUTES = ['/admin'];
 const STAFF_ROUTES = ['/staff'];

@@ -69,7 +69,7 @@ export default function HomePage() {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            href="/admin/login"
+            href="/admin-auth/login"
             className="px-4 py-2 text-amber-400 hover:text-amber-300 font-medium transition-colors text-sm"
           >
             Admin

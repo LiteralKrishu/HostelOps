@@ -51,7 +51,7 @@ export default async function AdminLayout({
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (error || !user) {
-        redirect('/admin/login');
+        redirect('/admin-auth/login');
     }
 
     // Fetch user profile and verify admin role

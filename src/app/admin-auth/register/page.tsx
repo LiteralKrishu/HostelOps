@@ -80,7 +80,7 @@ export default function AdminRegisterPage() {
                             </p>
                         </div>
                         <Link
-                            href="/admin/login"
+                            href="/admin-auth/login"
                             className="inline-flex items-center justify-center w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg shadow-amber-200"
                         >
                             Go to Login
@@ -156,8 +156,8 @@ export default function AdminRegisterPage() {
                                         type="button"
                                         onClick={() => setSelectedRole(value)}
                                         className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === value
-                                                ? 'bg-amber-50 border-amber-500 ring-2 ring-amber-500/20'
-                                                : 'bg-slate-50 border-slate-200 hover:border-amber-300 hover:bg-amber-50/50'
+                                            ? 'bg-amber-50 border-amber-500 ring-2 ring-amber-500/20'
+                                            : 'bg-slate-50 border-slate-200 hover:border-amber-300 hover:bg-amber-50/50'
                                             }`}
                                     >
                                         <Icon className={`w-6 h-6 mx-auto mb-2 ${selectedRole === value ? 'text-amber-600' : 'text-slate-500'
@@ -274,7 +274,7 @@ export default function AdminRegisterPage() {
                         <div className="mt-6 pt-6 border-t border-amber-100">
                             <p className="text-center text-slate-500 text-sm">
                                 Already have an account?{' '}
-                                <Link href="/admin/login" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
+                                <Link href="/admin-auth/login" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
                                     Sign in
                                 </Link>
                             </p>
