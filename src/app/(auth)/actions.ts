@@ -73,7 +73,7 @@ export async function loginAction(formData: FormData): Promise<AuthResult> {
         };
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
     });
@@ -84,6 +84,33 @@ export async function loginAction(formData: FormData): Promise<AuthResult> {
             success: false,
             error: 'Invalid email or password. Please try again.',
         };
+    }
+
+    // Check user role - only students can use this login
+    if (data.user) {
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('role, is_approved')
+            .eq('id', data.user.id)
+            .single();
+
+        // If admin/staff/management, redirect them to admin login
+        if (profile && ['admin', 'management', 'staff'].includes(profile.role)) {
+            await supabase.auth.signOut();
+            return {
+                success: false,
+                error: 'Admin and staff accounts must use the Admin login page.',
+            };
+        }
+
+        // Check if student is approved (should always be true for students, but just in case)
+        if (profile && !profile.is_approved) {
+            await supabase.auth.signOut();
+            return {
+                success: false,
+                error: 'Your account is pending approval. Please contact the administrator.',
+            };
+        }
     }
 
     // Redirect to dashboard on success
