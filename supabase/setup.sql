@@ -13,6 +13,12 @@
 create extension if not exists "uuid-ossp";
 
 -- =============================================================================
+-- CLEANUP: Drop old triggers that interfere with app-controlled profile creation
+-- =============================================================================
+drop trigger if exists on_auth_user_created on auth.users;
+drop function if exists public.handle_new_user();
+
+-- =============================================================================
 -- 1. PROFILES TABLE (extends auth.users)
 -- =============================================================================
 create table if not exists profiles (
@@ -24,7 +30,7 @@ create table if not exists profiles (
   block text,
   room text,
   phone text,
-  is_approved boolean default true, -- Admin accounts require manual approval (set to false for admins)
+  is_approved boolean default false, -- Defaults to false; students explicitly set to true, admins require approval
   created_at timestamp with time zone default now()
 );
 
@@ -216,30 +222,13 @@ create policy "Users can update own items" on lost_found_items
   for update using (reported_by = auth.uid());
 
 -- =============================================================================
--- AUTO-CREATE PROFILE ON SIGNUP
+-- NOTE: Profile creation is handled by the application code (not a trigger)
+-- This ensures proper values for role, hostel, is_approved, etc.
 -- =============================================================================
-create or replace function public.handle_new_user()
-returns trigger
-language plpgsql
-security definer set search_path = ''
-as $$
-begin
-  insert into public.profiles (id, full_name, role, hostel)
-  values (
-    new.id,
-    coalesce(new.raw_user_meta_data ->> 'full_name', split_part(new.email, '@', 1)),
-    coalesce(new.raw_user_meta_data ->> 'role', 'student'),
-    coalesce(new.raw_user_meta_data ->> 'hostel', 'Unassigned')
-  );
-  return new;
-end;
-$$;
 
--- Trigger to auto-create profile
-drop trigger if exists on_auth_user_created on auth.users;
-create trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute procedure public.handle_new_user();
+-- Policy to allow authenticated users to insert their own profile
+create policy "Users can insert own profile" on profiles
+  for insert with check (auth.uid() = id);
 
 -- =============================================================================
 -- UPDATED_AT TRIGGER

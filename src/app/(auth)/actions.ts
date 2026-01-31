@@ -201,6 +201,7 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
             hostel,
             block: block || null,
             room: room || null,
+            is_approved: true, // Students are auto-approved
         });
 
         if (profileError) {
