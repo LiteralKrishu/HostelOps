@@ -1,8 +1,8 @@
 /**
  * =============================================================================
- * ADMIN SIDEBAR COMPONENT
+ * ADMIN SIDEBAR COMPONENT - PURPLE THEME
  * =============================================================================
- * Navigation sidebar for admin portal with management links.
+ * Navigation sidebar for admin portal with light purple theme.
  * =============================================================================
  */
 'use client';
@@ -33,6 +33,7 @@ import {
     LayoutDashboard,
     AlertCircle,
     Users,
+    GraduationCap,
     Megaphone,
     Search,
     Settings,
@@ -40,7 +41,6 @@ import {
     User,
     ChevronUp,
     Building2,
-    BarChart3,
 } from 'lucide-react';
 import { logoutAction } from '@/app/(auth)/actions';
 
@@ -49,6 +49,7 @@ interface UserProfile {
     id: string;
     full_name: string;
     role: string;
+    hostel?: string;
 }
 
 // Navigation items
@@ -59,9 +60,9 @@ const navItems = [
         icon: LayoutDashboard,
     },
     {
-        title: 'Analytics',
-        url: '/admin/analytics',
-        icon: BarChart3,
+        title: 'Students',
+        url: '/admin/students',
+        icon: GraduationCap,
     },
     {
         title: 'All Issues',
@@ -105,19 +106,19 @@ export function AdminSidebar({ user }: { user: UserProfile }) {
         .slice(0, 2);
 
     return (
-        <Sidebar variant="inset" collapsible="icon">
+        <Sidebar variant="inset" collapsible="icon" className="border-r border-purple-100">
             {/* Header with Logo */}
-            <SidebarHeader>
+            <SidebarHeader className="border-b border-purple-100">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <Link href="/admin">
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-lg">
+                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-purple-700 text-white shadow-lg shadow-purple-200">
                                     <Building2 className="size-4" />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-semibold">HostelOps</span>
-                                    <span className="text-xs text-muted-foreground">Admin Portal</span>
+                                    <span className="font-semibold text-slate-900">HostelOps</span>
+                                    <span className="text-xs text-purple-600">Admin Portal</span>
                                 </div>
                             </Link>
                         </SidebarMenuButton>
@@ -126,9 +127,9 @@ export function AdminSidebar({ user }: { user: UserProfile }) {
             </SidebarHeader>
 
             {/* Main Navigation */}
-            <SidebarContent>
+            <SidebarContent className="bg-white/50">
                 <SidebarGroup>
-                    <SidebarGroupLabel>Management</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-purple-600">Management</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {navItems.map((item) => (
@@ -137,9 +138,10 @@ export function AdminSidebar({ user }: { user: UserProfile }) {
                                         asChild
                                         isActive={pathname === item.url || pathname.startsWith(item.url + '/')}
                                         tooltip={item.title}
+                                        className="text-slate-600 hover:text-purple-700 hover:bg-purple-50 data-[active=true]:bg-purple-100 data-[active=true]:text-purple-700"
                                     >
                                         <Link href={item.url}>
-                                            <item.icon />
+                                            <item.icon className="text-purple-500" />
                                             <span>{item.title}</span>
                                         </Link>
                                     </SidebarMenuButton>
@@ -150,7 +152,7 @@ export function AdminSidebar({ user }: { user: UserProfile }) {
                 </SidebarGroup>
 
                 <SidebarGroup>
-                    <SidebarGroupLabel>System</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-purple-600">System</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {settingsItems.map((item) => (
@@ -159,9 +161,10 @@ export function AdminSidebar({ user }: { user: UserProfile }) {
                                         asChild
                                         isActive={pathname === item.url}
                                         tooltip={item.title}
+                                        className="text-slate-600 hover:text-purple-700 hover:bg-purple-50 data-[active=true]:bg-purple-100 data-[active=true]:text-purple-700"
                                     >
                                         <Link href={item.url}>
-                                            <item.icon />
+                                            <item.icon className="text-purple-500" />
                                             <span>{item.title}</span>
                                         </Link>
                                     </SidebarMenuButton>
@@ -173,31 +176,31 @@ export function AdminSidebar({ user }: { user: UserProfile }) {
             </SidebarContent>
 
             {/* Footer with User Menu */}
-            <SidebarFooter>
+            <SidebarFooter className="border-t border-purple-100 bg-white/50">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton
                                     size="lg"
-                                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                                    className="data-[state=open]:bg-purple-50"
                                 >
                                     <Avatar className="h-8 w-8 rounded-lg">
-                                        <AvatarFallback className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-700 text-white text-sm">
+                                        <AvatarFallback className="rounded-lg bg-gradient-to-br from-violet-600 to-purple-700 text-white text-sm">
                                             {initials}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="grid flex-1 text-left text-sm leading-tight">
-                                        <span className="truncate font-semibold">{user.full_name}</span>
-                                        <span className="truncate text-xs text-muted-foreground capitalize">
+                                        <span className="truncate font-semibold text-slate-900">{user.full_name}</span>
+                                        <span className="truncate text-xs text-purple-600 capitalize">
                                             {user.role}
                                         </span>
                                     </div>
-                                    <ChevronUp className="ml-auto size-4" />
+                                    <ChevronUp className="ml-auto size-4 text-purple-500" />
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
-                                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-xl border-purple-100"
                                 side="bottom"
                                 align="end"
                                 sideOffset={4}

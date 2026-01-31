@@ -1,9 +1,9 @@
 /**
  * =============================================================================
- * ADMIN LAYOUT
+ * ADMIN LAYOUT - LIGHT PURPLE THEME
  * =============================================================================
  * Main layout for admin portal with sidebar navigation.
- * Validates admin role before rendering.
+ * Features light purple/lavender theme matching the reference design.
  * =============================================================================
  */
 import { redirect } from 'next/navigation';
@@ -14,7 +14,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Admin Dashboard - HostelOps',
-    description: 'Manage hostel issues and staff',
+    description: 'Manage hostel issues and students',
 };
 
 export default async function AdminLayout({
@@ -31,24 +31,27 @@ export default async function AdminLayout({
             full_name: 'Demo Admin',
             role: 'admin' as const,
             email: 'admin@demo.com',
+            hostel: 'Demo Hostel',
         };
 
         return (
-            <SidebarProvider>
-                <AdminSidebar user={demoAdmin} />
-                <SidebarInset>
-                    <main className="flex-1 min-h-screen bg-slate-50 dark:bg-slate-900">
-                        {children}
-                    </main>
-                </SidebarInset>
-            </SidebarProvider>
+            <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
+                <SidebarProvider>
+                    <AdminSidebar user={demoAdmin} />
+                    <SidebarInset>
+                        <main className="flex-1 min-h-screen">
+                            {children}
+                        </main>
+                    </SidebarInset>
+                </SidebarProvider>
+            </div>
         );
     }
 
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (error || !user) {
-        redirect('/login');
+        redirect('/admin/login');
     }
 
     // Fetch user profile and verify admin role
@@ -63,21 +66,19 @@ export default async function AdminLayout({
         id: user.id,
         full_name: user.email?.split('@')[0] || 'Admin',
         role: 'admin',
+        hostel: 'Demo Hostel',
     };
 
-    // In production, redirect non-admins
-    // if (adminProfile.role !== 'admin') {
-    //   redirect('/student');
-    // }
-
     return (
-        <SidebarProvider>
-            <AdminSidebar user={adminProfile} />
-            <SidebarInset>
-                <main className="flex-1 min-h-screen bg-slate-50 dark:bg-slate-900">
-                    {children}
-                </main>
-            </SidebarInset>
-        </SidebarProvider>
+        <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
+            <SidebarProvider>
+                <AdminSidebar user={adminProfile} />
+                <SidebarInset>
+                    <main className="flex-1 min-h-screen">
+                        {children}
+                    </main>
+                </SidebarInset>
+            </SidebarProvider>
+        </div>
     );
 }

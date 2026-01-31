@@ -1,12 +1,8 @@
 /**
  * =============================================================================
- * STUDENT DASHBOARD PAGE - DARK THEME
+ * STUDENT DASHBOARD PAGE - LIGHT PURPLE THEME
  * =============================================================================
- * Main dashboard for students featuring:
- * - Quick stats with glassmorphism cards
- * - Recent issues
- * - Quick actions
- * Matches landing page design aesthetic.
+ * Main dashboard for students with light purple theme.
  * =============================================================================
  */
 import { createClient } from '@/lib/supabase/server';
@@ -33,11 +29,11 @@ const priorityColors: Record<string, string> = {
 
 // Status badge colors
 const statusColors: Record<string, string> = {
-    reported: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
-    assigned: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    in_progress: 'bg-violet-500/20 text-violet-300 border-violet-500/30',
-    resolved: 'bg-green-500/20 text-green-300 border-green-500/30',
-    closed: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+    reported: 'bg-slate-100 text-slate-600 border-slate-200',
+    assigned: 'bg-blue-100 text-blue-700 border-blue-200',
+    in_progress: 'bg-purple-100 text-purple-700 border-purple-200',
+    resolved: 'bg-green-100 text-green-700 border-green-200',
+    closed: 'bg-slate-100 text-slate-600 border-slate-200',
 };
 
 export default async function StudentDashboard() {
@@ -144,67 +140,58 @@ export default async function StudentDashboard() {
     return (
         <>
             {/* Header */}
-            <header className="flex h-16 shrink-0 items-center gap-4 border-b border-white/5 bg-slate-900/50 backdrop-blur-sm px-6">
-                <SidebarTrigger className="-ml-1 text-slate-400 hover:text-white">
+            <header className="flex h-16 shrink-0 items-center gap-4 border-b border-purple-100 bg-white/80 backdrop-blur-sm px-6">
+                <SidebarTrigger className="-ml-1 text-purple-600 hover:text-purple-700">
                     <Menu className="h-5 w-5" />
                 </SidebarTrigger>
-                <div className="h-4 w-px bg-white/10" />
+                <div className="h-4 w-px bg-purple-200" />
                 <div>
-                    <h1 className="font-semibold text-white">Dashboard</h1>
+                    <h1 className="font-semibold text-slate-900">Dashboard</h1>
+                    <p className="text-xs text-purple-600">Welcome back!</p>
                 </div>
             </header>
 
             {/* Main Content */}
             <div className="flex-1 p-6">
-                {/* Welcome Section */}
-                <div className="mb-8">
-                    <h2 className="text-2xl font-bold tracking-tight text-white">
-                        Welcome back! 👋
-                    </h2>
-                    <p className="text-slate-400">
-                        Here&apos;s what&apos;s happening with your hostel issues.
-                    </p>
-                </div>
-
                 {/* Quick Actions */}
-                <div className="grid gap-4 md:grid-cols-3 mb-8">
+                <div className="grid gap-4 md:grid-cols-3 mb-6">
                     <Link href="/student/issues/new">
-                        <div className="group p-5 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-violet-500/30 backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-violet-500/5">
+                        <div className="group p-5 rounded-xl bg-white border border-purple-100 shadow-sm hover:shadow-md hover:border-purple-200 transition-all">
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-sm font-medium text-white">Report Issue</span>
-                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-violet-500/30">
+                                <span className="text-sm font-medium text-slate-900">Report Issue</span>
+                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-purple-200">
                                     <Plus className="h-5 w-5 text-white" />
                                 </div>
                             </div>
-                            <p className="text-xs text-slate-400">
+                            <p className="text-xs text-slate-500">
                                 Submit a new issue in under 30 seconds
                             </p>
                         </div>
                     </Link>
 
                     <Link href="/student/lost-found">
-                        <div className="group p-5 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-emerald-500/30 backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-emerald-500/5">
+                        <div className="group p-5 rounded-xl bg-white border border-purple-100 shadow-sm hover:shadow-md hover:border-purple-200 transition-all">
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-sm font-medium text-white">Lost & Found</span>
-                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-emerald-500/30">
+                                <span className="text-sm font-medium text-slate-900">Lost & Found</span>
+                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-emerald-200">
                                     <Search className="h-5 w-5 text-white" />
                                 </div>
                             </div>
-                            <p className="text-xs text-slate-400">
+                            <p className="text-xs text-slate-500">
                                 Report or find lost items
                             </p>
                         </div>
                     </Link>
 
                     <Link href="/student/announcements">
-                        <div className="group p-5 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-amber-500/30 backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-amber-500/5">
+                        <div className="group p-5 rounded-xl bg-white border border-purple-100 shadow-sm hover:shadow-md hover:border-purple-200 transition-all">
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-sm font-medium text-white">Announcements</span>
-                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/30">
+                                <span className="text-sm font-medium text-slate-900">Announcements</span>
+                                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-amber-200">
                                     <Bell className="h-5 w-5 text-white" />
                                 </div>
                             </div>
-                            <p className="text-xs text-slate-400">
+                            <p className="text-xs text-slate-500">
                                 View hostel updates
                             </p>
                         </div>
@@ -212,31 +199,31 @@ export default async function StudentDashboard() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid gap-4 md:grid-cols-3 mb-8">
-                    <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm">
+                <div className="grid gap-4 md:grid-cols-3 mb-6">
+                    <div className="p-5 rounded-xl bg-white border border-purple-100 shadow-sm">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-slate-400">Total Issues</span>
-                            <AlertCircle className="h-4 w-4 text-slate-500" />
+                            <span className="text-sm font-medium text-slate-500">Total Issues</span>
+                            <AlertCircle className="h-4 w-4 text-purple-500" />
                         </div>
-                        <div className="text-3xl font-bold text-white">{stats.total}</div>
+                        <div className="text-3xl font-bold text-slate-900">{stats.total}</div>
                         <p className="text-xs text-slate-500">All time</p>
                     </div>
 
-                    <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm">
+                    <div className="p-5 rounded-xl bg-white border border-purple-100 shadow-sm">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-slate-400">Pending</span>
+                            <span className="text-sm font-medium text-slate-500">Pending</span>
                             <Clock className="h-4 w-4 text-yellow-500" />
                         </div>
-                        <div className="text-3xl font-bold text-white">{stats.pending}</div>
+                        <div className="text-3xl font-bold text-slate-900">{stats.pending}</div>
                         <p className="text-xs text-slate-500">Awaiting resolution</p>
                     </div>
 
-                    <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm">
+                    <div className="p-5 rounded-xl bg-white border border-purple-100 shadow-sm">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-slate-400">Resolved</span>
+                            <span className="text-sm font-medium text-slate-500">Resolved</span>
                             <CheckCircle2 className="h-4 w-4 text-green-500" />
                         </div>
-                        <div className="text-3xl font-bold text-white">{stats.resolved}</div>
+                        <div className="text-3xl font-bold text-slate-900">{stats.resolved}</div>
                         <p className="text-xs text-slate-500">Completed</p>
                     </div>
                 </div>
@@ -244,13 +231,13 @@ export default async function StudentDashboard() {
                 {/* Recent Issues & Announcements Grid */}
                 <div className="grid gap-6 lg:grid-cols-2">
                     {/* Recent Issues */}
-                    <div className="rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm overflow-hidden">
-                        <div className="flex items-center justify-between p-5 border-b border-white/5">
+                    <div className="bg-white rounded-xl border border-purple-100 shadow-sm overflow-hidden">
+                        <div className="flex items-center justify-between p-5 border-b border-purple-50">
                             <div>
-                                <h3 className="font-semibold text-white">Recent Issues</h3>
-                                <p className="text-xs text-slate-400">Your latest reported issues</p>
+                                <h3 className="font-semibold text-slate-900">Recent Issues</h3>
+                                <p className="text-xs text-slate-500">Your latest reported issues</p>
                             </div>
-                            <Link href="/student/issues" className="text-sm text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors">
+                            <Link href="/student/issues" className="text-sm text-purple-600 hover:text-purple-700 flex items-center gap-1 transition-colors">
                                 View all <ArrowRight className="h-4 w-4" />
                             </Link>
                         </div>
@@ -258,7 +245,7 @@ export default async function StudentDashboard() {
                             {recentIssues.length === 0 ? (
                                 <p className="text-sm text-slate-500 text-center py-8">
                                     No issues reported yet.{' '}
-                                    <Link href="/student/issues/new" className="text-violet-400 hover:underline">
+                                    <Link href="/student/issues/new" className="text-purple-600 hover:underline">
                                         Report one now
                                     </Link>
                                 </p>
@@ -268,14 +255,14 @@ export default async function StudentDashboard() {
                                         <Link
                                             key={issue.id}
                                             href={`/student/issues/${issue.id}`}
-                                            className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                                            className="flex items-center gap-4 p-3 rounded-xl hover:bg-purple-50/50 transition-colors"
                                         >
                                             {/* Priority indicator */}
                                             <div className={`w-2 h-2 rounded-full ${priorityColors[issue.priority]}`} />
 
                                             {/* Issue info */}
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-medium text-white truncate">{issue.title}</p>
+                                                <p className="font-medium text-slate-900 truncate">{issue.title}</p>
                                                 <p className="text-xs text-slate-500">
                                                     {issue.category} • {new Date(issue.created_at).toLocaleDateString()}
                                                 </p>
@@ -293,13 +280,13 @@ export default async function StudentDashboard() {
                     </div>
 
                     {/* Announcements */}
-                    <div className="rounded-2xl bg-slate-900/50 border border-white/5 backdrop-blur-sm overflow-hidden">
-                        <div className="flex items-center justify-between p-5 border-b border-white/5">
+                    <div className="bg-white rounded-xl border border-purple-100 shadow-sm overflow-hidden">
+                        <div className="flex items-center justify-between p-5 border-b border-purple-50">
                             <div>
-                                <h3 className="font-semibold text-white">Announcements</h3>
-                                <p className="text-xs text-slate-400">Recent hostel updates</p>
+                                <h3 className="font-semibold text-slate-900">Announcements</h3>
+                                <p className="text-xs text-slate-500">Recent hostel updates</p>
                             </div>
-                            <Link href="/student/announcements" className="text-sm text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors">
+                            <Link href="/student/announcements" className="text-sm text-purple-600 hover:text-purple-700 flex items-center gap-1 transition-colors">
                                 View all <ArrowRight className="h-4 w-4" />
                             </Link>
                         </div>
@@ -313,15 +300,15 @@ export default async function StudentDashboard() {
                                     {announcements.map((announcement) => (
                                         <div
                                             key={announcement.id}
-                                            className="p-4 rounded-xl bg-white/5 border border-white/5"
+                                            className="p-4 rounded-xl bg-purple-50/50 border border-purple-100"
                                         >
                                             <div className="flex items-start gap-3">
-                                                <div className="h-8 w-8 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                                                    <Bell className="h-4 w-4 text-amber-400" />
+                                                <div className="h-8 w-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                                    <Bell className="h-4 w-4 text-amber-600" />
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-white">{announcement.title}</p>
-                                                    <p className="text-sm text-slate-400 line-clamp-2">
+                                                    <p className="font-medium text-slate-900">{announcement.title}</p>
+                                                    <p className="text-sm text-slate-600 line-clamp-2">
                                                         {announcement.content}
                                                     </p>
                                                     <p className="text-xs text-slate-500 mt-1">
