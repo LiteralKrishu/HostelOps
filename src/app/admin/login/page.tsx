@@ -1,9 +1,9 @@
 /**
  * =============================================================================
- * ADMIN LOGIN PAGE - MODERN PURPLE THEME
+ * ADMIN LOGIN PAGE - AMBER/GOLD THEME
  * =============================================================================
  * Professional login page for admin, management, and staff.
- * Features a light purple/lavender design with glassmorphism.
+ * Features an amber/gold premium design with glassmorphism.
  * =============================================================================
  */
 'use client';
@@ -11,7 +11,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Shield, ArrowLeft, Loader2, Mail, Lock, Building2, AlertCircle } from 'lucide-react';
+import { Shield, ArrowLeft, Loader2, Mail, Lock, Building2, AlertCircle, Crown } from 'lucide-react';
 import { loginAdminAction } from '../register/actions';
 
 export default function AdminLoginPage() {
@@ -39,24 +39,24 @@ export default function AdminLoginPage() {
 
     return (
         <div className="min-h-screen flex">
-            {/* Left Side - Decorative */}
-            <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-600 overflow-hidden">
+            {/* Left Side - Decorative Amber Gradient */}
+            <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 overflow-hidden">
                 {/* Decorative circles */}
                 <div className="absolute top-20 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-20 right-20 w-96 h-96 bg-fuchsia-500/20 rounded-full blur-3xl" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-violet-400/20 rounded-full blur-2xl" />
+                <div className="absolute bottom-20 right-20 w-96 h-96 bg-yellow-400/20 rounded-full blur-3xl" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-orange-300/20 rounded-full blur-2xl" />
 
                 {/* Grid pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-white">
-                    <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl">
-                        <Building2 className="w-10 h-10" />
+                    <div className="w-24 h-24 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl border border-white/20">
+                        <Crown className="w-12 h-12" />
                     </div>
-                    <h1 className="text-4xl font-bold mb-4 text-center">HostelOps Admin</h1>
-                    <p className="text-xl text-white/80 text-center max-w-md">
-                        Manage your hostel operations efficiently with our powerful admin dashboard.
+                    <h1 className="text-4xl font-bold mb-4 text-center">Admin Portal</h1>
+                    <p className="text-xl text-white/90 text-center max-w-md">
+                        Powerful tools to manage your hostel operations efficiently.
                     </p>
 
                     {/* Feature list */}
@@ -67,9 +67,9 @@ export default function AdminLoginPage() {
                             'Send announcements to students',
                             'View detailed analytics',
                         ].map((feature, i) => (
-                            <div key={i} className="flex items-center gap-3 text-white/90">
-                                <div className="w-2 h-2 rounded-full bg-white/60" />
-                                <span>{feature}</span>
+                            <div key={i} className="flex items-center gap-3 text-white/95">
+                                <div className="w-2.5 h-2.5 rounded-full bg-white/80" />
+                                <span className="text-lg">{feature}</span>
                             </div>
                         ))}
                     </div>
@@ -77,22 +77,22 @@ export default function AdminLoginPage() {
             </div>
 
             {/* Right Side - Login Form */}
-            <div className="flex-1 flex items-center justify-center p-8 bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
+            <div className="flex-1 flex items-center justify-center p-8 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
                 <div className="w-full max-w-md">
                     {/* Back Link */}
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 mb-8 transition-colors"
+                        className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-8 transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Home
                     </Link>
 
                     {/* Login Card */}
-                    <div className="bg-white rounded-3xl p-8 shadow-xl shadow-purple-100/50 border border-purple-100">
+                    <div className="bg-white rounded-3xl p-8 shadow-xl shadow-amber-100/50 border border-amber-100">
                         {/* Header */}
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-200">
                                 <Shield className="w-7 h-7 text-white" />
                             </div>
                             <div>
@@ -123,7 +123,7 @@ export default function AdminLoginPage() {
                                         name="email"
                                         type="email"
                                         required
-                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-purple-100 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-300 transition-all"
+                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-amber-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
                                         placeholder="you@hostel.edu"
                                     />
                                 </div>
@@ -141,7 +141,7 @@ export default function AdminLoginPage() {
                                         name="password"
                                         type="password"
                                         required
-                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-purple-100 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-300 transition-all"
+                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-amber-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
                                         placeholder="Enter your password"
                                     />
                                 </div>
@@ -151,7 +151,7 @@ export default function AdminLoginPage() {
                             <button
                                 type="submit"
                                 disabled={pending}
-                                className="w-full h-12 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold rounded-xl hover:from-violet-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-purple-200"
+                                className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-amber-200"
                             >
                                 {pending ? (
                                     <>
@@ -165,10 +165,10 @@ export default function AdminLoginPage() {
                         </form>
 
                         {/* Footer */}
-                        <div className="mt-8 pt-6 border-t border-purple-100">
+                        <div className="mt-8 pt-6 border-t border-amber-100">
                             <p className="text-center text-slate-500 text-sm">
                                 Need an account?{' '}
-                                <Link href="/admin/register" className="text-purple-600 hover:text-purple-700 font-medium transition-colors">
+                                <Link href="/admin/register" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
                                     Register here
                                 </Link>
                             </p>
@@ -178,7 +178,7 @@ export default function AdminLoginPage() {
                     {/* Student Login Link */}
                     <p className="text-center text-slate-500 text-sm mt-6">
                         Are you a student?{' '}
-                        <Link href="/login" className="text-purple-600 hover:text-purple-700 font-medium transition-colors">
+                        <Link href="/login" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
                             Student Login
                         </Link>
                     </p>

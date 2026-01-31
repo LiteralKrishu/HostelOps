@@ -1,16 +1,16 @@
 /**
  * =============================================================================
- * ADMIN REGISTER PAGE - MODERN PURPLE THEME
+ * ADMIN REGISTER PAGE - AMBER/GOLD THEME
  * =============================================================================
  * Professional registration page for admin, management, and staff.
- * Features role selection and hostel assignment.
+ * Features role selection and hostel assignment with amber theme.
  * =============================================================================
  */
 'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Shield, Users, Wrench, ArrowLeft, Loader2, Mail, Lock, User, Building2, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Shield, Users, Wrench, ArrowLeft, Loader2, Mail, Lock, User, Building2, AlertCircle, CheckCircle2, Crown } from 'lucide-react';
 import { registerAdminAction } from './actions';
 
 type AdminRole = 'admin' | 'management' | 'staff';
@@ -64,9 +64,9 @@ export default function AdminRegisterPage() {
 
     if (success) {
         return (
-            <div className="min-h-screen flex items-center justify-center p-8 bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
+            <div className="min-h-screen flex items-center justify-center p-8 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
                 <div className="max-w-md w-full text-center">
-                    <div className="bg-white rounded-3xl p-10 shadow-xl shadow-purple-100/50 border border-purple-100">
+                    <div className="bg-white rounded-3xl p-10 shadow-xl shadow-amber-100/50 border border-amber-100">
                         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-200">
                             <CheckCircle2 className="w-10 h-10 text-white" />
                         </div>
@@ -81,7 +81,7 @@ export default function AdminRegisterPage() {
                         </div>
                         <Link
                             href="/admin/login"
-                            className="inline-flex items-center justify-center w-full h-12 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold rounded-xl hover:from-violet-700 hover:to-purple-700 transition-all shadow-lg shadow-purple-200"
+                            className="inline-flex items-center justify-center w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg shadow-amber-200"
                         >
                             Go to Login
                         </Link>
@@ -93,51 +93,51 @@ export default function AdminRegisterPage() {
 
     return (
         <div className="min-h-screen flex">
-            {/* Left Side - Decorative */}
-            <div className="hidden lg:flex lg:w-2/5 relative bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-600 overflow-hidden">
+            {/* Left Side - Decorative Amber Gradient */}
+            <div className="hidden lg:flex lg:w-2/5 relative bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 overflow-hidden">
                 {/* Decorative circles */}
                 <div className="absolute top-20 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-20 right-10 w-80 h-80 bg-fuchsia-500/20 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-80 h-80 bg-yellow-400/20 rounded-full blur-3xl" />
 
                 {/* Grid pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-white">
-                    <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl">
-                        <Building2 className="w-10 h-10" />
+                    <div className="w-24 h-24 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-8 shadow-2xl border border-white/20">
+                        <Crown className="w-12 h-12" />
                     </div>
-                    <h1 className="text-3xl font-bold mb-4 text-center">Join HostelOps</h1>
-                    <p className="text-lg text-white/80 text-center max-w-sm">
+                    <h1 className="text-3xl font-bold mb-4 text-center">Join Admin Portal</h1>
+                    <p className="text-lg text-white/90 text-center max-w-sm">
                         Register as an administrator or staff member to manage hostel operations.
                     </p>
 
                     {/* Note */}
-                    <div className="mt-10 p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-                        <p className="text-sm text-white/90 text-center">
-                            All staff accounts require approval before you can login.
+                    <div className="mt-10 p-4 bg-white/15 backdrop-blur-sm rounded-xl border border-white/20">
+                        <p className="text-sm text-white text-center">
+                            ⚠️ All staff accounts require approval before login.
                         </p>
                     </div>
                 </div>
             </div>
 
             {/* Right Side - Register Form */}
-            <div className="flex-1 flex items-center justify-center p-8 bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 overflow-y-auto">
+            <div className="flex-1 flex items-center justify-center p-8 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 overflow-y-auto">
                 <div className="w-full max-w-lg py-8">
                     {/* Back Link */}
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 mb-6 transition-colors"
+                        className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-6 transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Home
                     </Link>
 
                     {/* Register Card */}
-                    <div className="bg-white rounded-3xl p-8 shadow-xl shadow-purple-100/50 border border-purple-100">
+                    <div className="bg-white rounded-3xl p-8 shadow-xl shadow-amber-100/50 border border-amber-100">
                         {/* Header */}
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-200">
                                 <Shield className="w-7 h-7 text-white" />
                             </div>
                             <div>
@@ -156,13 +156,13 @@ export default function AdminRegisterPage() {
                                         type="button"
                                         onClick={() => setSelectedRole(value)}
                                         className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === value
-                                                ? 'bg-purple-50 border-purple-500 ring-2 ring-purple-500/20'
-                                                : 'bg-slate-50 border-slate-200 hover:border-purple-300 hover:bg-purple-50/50'
+                                                ? 'bg-amber-50 border-amber-500 ring-2 ring-amber-500/20'
+                                                : 'bg-slate-50 border-slate-200 hover:border-amber-300 hover:bg-amber-50/50'
                                             }`}
                                     >
-                                        <Icon className={`w-6 h-6 mx-auto mb-2 ${selectedRole === value ? 'text-purple-600' : 'text-slate-500'
+                                        <Icon className={`w-6 h-6 mx-auto mb-2 ${selectedRole === value ? 'text-amber-600' : 'text-slate-500'
                                             }`} />
-                                        <span className={`text-sm font-semibold ${selectedRole === value ? 'text-purple-700' : 'text-slate-700'
+                                        <span className={`text-sm font-semibold ${selectedRole === value ? 'text-amber-700' : 'text-slate-700'
                                             }`}>{label}</span>
                                         <p className="text-xs text-slate-400 mt-1 hidden sm:block">{description}</p>
                                     </button>
@@ -192,7 +192,7 @@ export default function AdminRegisterPage() {
                                         name="fullName"
                                         type="text"
                                         required
-                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-purple-100 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-300 transition-all"
+                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-amber-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
                                         placeholder="Your full name"
                                     />
                                 </div>
@@ -210,7 +210,7 @@ export default function AdminRegisterPage() {
                                         name="email"
                                         type="email"
                                         required
-                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-purple-100 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-300 transition-all"
+                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-amber-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
                                         placeholder="you@hostel.edu"
                                     />
                                 </div>
@@ -229,7 +229,7 @@ export default function AdminRegisterPage() {
                                         type="password"
                                         required
                                         minLength={8}
-                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-purple-100 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-300 transition-all"
+                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-amber-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
                                         placeholder="Min. 8 characters"
                                     />
                                 </div>
@@ -247,7 +247,7 @@ export default function AdminRegisterPage() {
                                         name="hostel"
                                         type="text"
                                         required
-                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-purple-100 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-300 transition-all"
+                                        className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-amber-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-400 transition-all"
                                         placeholder="e.g., Hostel A"
                                     />
                                 </div>
@@ -257,7 +257,7 @@ export default function AdminRegisterPage() {
                             <button
                                 type="submit"
                                 disabled={pending}
-                                className="w-full h-12 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold rounded-xl hover:from-violet-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-purple-200 mt-6"
+                                className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-amber-200 mt-6"
                             >
                                 {pending ? (
                                     <>
@@ -271,10 +271,10 @@ export default function AdminRegisterPage() {
                         </form>
 
                         {/* Footer */}
-                        <div className="mt-6 pt-6 border-t border-purple-100">
+                        <div className="mt-6 pt-6 border-t border-amber-100">
                             <p className="text-center text-slate-500 text-sm">
                                 Already have an account?{' '}
-                                <Link href="/admin/login" className="text-purple-600 hover:text-purple-700 font-medium transition-colors">
+                                <Link href="/admin/login" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
                                     Sign in
                                 </Link>
                             </p>
@@ -284,7 +284,7 @@ export default function AdminRegisterPage() {
                     {/* Student Registration Link */}
                     <p className="text-center text-slate-500 text-sm mt-6">
                         Are you a student?{' '}
-                        <Link href="/register" className="text-purple-600 hover:text-purple-700 font-medium transition-colors">
+                        <Link href="/register" className="text-amber-600 hover:text-amber-700 font-medium transition-colors">
                             Student Registration
                         </Link>
                     </p>

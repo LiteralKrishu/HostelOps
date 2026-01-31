@@ -69,6 +69,12 @@ export default function HomePage() {
         </div>
         <div className="flex items-center gap-3">
           <Link
+            href="/admin/login"
+            className="px-4 py-2 text-amber-400 hover:text-amber-300 font-medium transition-colors text-sm"
+          >
+            Admin
+          </Link>
+          <Link
             href="/login"
             className="px-5 py-2.5 text-slate-300 hover:text-white font-medium transition-colors"
           >
