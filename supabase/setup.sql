@@ -22,6 +22,7 @@ create table if not exists profiles (
   hostel text not null,
   block text,
   room text,
+  phone text,
   is_approved boolean default true, -- Admin accounts require manual approval (set to false for admins)
   created_at timestamp with time zone default now()
 );
