@@ -18,10 +18,11 @@ create extension if not exists "uuid-ossp";
 create table if not exists profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   full_name text not null,
-  role text check (role in ('student', 'management', 'staff')) not null default 'student',
+  role text check (role in ('student', 'admin', 'management', 'staff')) not null default 'student',
   hostel text not null,
   block text,
   room text,
+  is_approved boolean default true, -- Admin accounts require manual approval (set to false for admins)
   created_at timestamp with time zone default now()
 );
 

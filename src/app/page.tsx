@@ -134,20 +134,12 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-            {[
-              { value: '500+', label: 'Issues Resolved' },
-              { value: '24/7', label: 'Support' },
-              { value: '99.9%', label: 'Uptime' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-slate-500">{stat.label}</div>
-              </div>
-            ))}
+          {/* Privacy First Notice */}
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm">
+            <Shield className="w-5 h-5 text-emerald-400" />
+            <span className="text-emerald-300 font-medium">
+              🔒 Privacy First — Your data stays secure with end-to-end encryption
+            </span>
           </div>
         </div>
       </section>
@@ -333,6 +325,60 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Admin Access Section */}
+      <section className="relative z-10 px-6 lg:px-12 py-24 max-w-5xl mx-auto">
+        <div className="relative p-8 md:p-12 rounded-3xl overflow-hidden border border-amber-500/20 bg-slate-900/80 backdrop-blur-xl">
+          {/* Background glow */}
+          <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-full blur-3xl" />
+
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-white">Admin Access</h3>
+                <p className="text-slate-400 text-sm">For hostel administrators only</p>
+              </div>
+            </div>
+
+            <p className="text-slate-300 mb-6 max-w-2xl">
+              Admin accounts require <strong className="text-amber-300">manual approval</strong> by a system administrator.
+              After registration, your account will be reviewed and approved via the Supabase dashboard.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/admin/register"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all"
+              >
+                Register as Admin
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/admin/login"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/5 text-white font-medium rounded-xl border border-white/10 hover:bg-white/10 transition-all"
+              >
+                Admin Sign In
+              </Link>
+            </div>
+
+            {/* Manual Approval Notice */}
+            <div className="mt-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <div className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-amber-400 mt-0.5" />
+                <div>
+                  <p className="text-amber-200 font-medium">Pending Approval?</p>
+                  <p className="text-amber-200/70 text-sm">
+                    If you&apos;ve registered and are waiting for access, please contact the system administrator to approve your account. Approvals are done manually via the Supabase dashboard.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="relative z-10 px-6 lg:px-12 py-24 max-w-5xl mx-auto">
         <div className="relative p-12 md:p-16 rounded-[2.5rem] overflow-hidden">
@@ -346,7 +392,7 @@ export default function HomePage() {
               Ready to Get Started?
             </h2>
             <p className="text-white/80 max-w-xl mx-auto mb-8">
-              Join hundreds of hostels already using HostelOps to streamline their operations.
+              Join hostels already using HostelOps to streamline their operations.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
