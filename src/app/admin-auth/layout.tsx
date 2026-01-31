@@ -1,21 +1,15 @@
 /**
  * =============================================================================
- * AUTH LAYOUT (STUDENT)
+ * ADMIN AUTH LAYOUT
  * =============================================================================
- * Shared layout for student authentication pages (login, register).
+ * Layout for admin authentication pages.
  * Redirects already-logged-in users to appropriate portal.
  * =============================================================================
  */
-import { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
-export const metadata: Metadata = {
-    title: 'Authentication - HostelOps',
-    description: 'Sign in or create an account to access HostelOps',
-};
-
-export default async function AuthLayout({
+export default async function AdminAuthLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -39,14 +33,14 @@ export default async function AuthLayout({
             .single();
 
         if (profile) {
-            // If student and approved, redirect to student portal
-            if (profile.role === 'student' && profile.is_approved) {
-                redirect('/student');
-            }
-
             // If admin/management/staff and approved, redirect to admin portal
             if (['admin', 'management', 'staff'].includes(profile.role) && profile.is_approved) {
                 redirect('/admin');
+            }
+
+            // If student, they shouldn't be here - redirect to student portal
+            if (profile.role === 'student') {
+                redirect('/student');
             }
         }
     }
@@ -54,4 +48,3 @@ export default async function AuthLayout({
     // Not logged in or not approved - show auth pages
     return <>{children}</>;
 }
-

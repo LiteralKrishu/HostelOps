@@ -15,6 +15,12 @@
   <img src="https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss" alt="Tailwind" />
 </p>
 
+<p align="center">
+  <a href="https://drive.google.com/file/d/1fAb6_d0LLahT--Fc4fjxxGjtLxrM9X3E/view?usp=drive_link">
+    <strong>🎬 Watch Video Demo</strong>
+  </a>
+</p>
+
 ---
 
 ## ✨ Features

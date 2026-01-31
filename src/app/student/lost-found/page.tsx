@@ -13,45 +13,19 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Search, MapPin, Calendar, Package } from 'lucide-react';
 
 export default async function LostFoundPage() {
-    // Mock lost & found data
-    const items = [
-        {
-            id: '1',
-            type: 'lost',
-            description: 'Blue Titan watch with leather strap',
-            location: 'Near canteen',
-            status: 'open',
-            image_url: null,
-            created_at: new Date().toISOString(),
-        },
-        {
-            id: '2',
-            type: 'found',
-            description: 'Black wallet with ID cards',
-            location: 'Library entrance',
-            status: 'open',
-            image_url: null,
-            created_at: new Date(Date.now() - 86400000).toISOString(),
-        },
-        {
-            id: '3',
-            type: 'found',
-            description: 'USB flash drive (16GB SanDisk)',
-            location: 'Computer lab',
-            status: 'claimed',
-            image_url: null,
-            created_at: new Date(Date.now() - 259200000).toISOString(),
-        },
-        {
-            id: '4',
-            type: 'lost',
-            description: 'Silver earphones with case',
-            location: 'Hostel common room',
-            status: 'open',
-            image_url: null,
-            created_at: new Date(Date.now() - 172800000).toISOString(),
-        },
-    ];
+    const supabase = await createClient();
+
+    // Fetch lost & found items
+    const { data: items, error } = await supabase
+        .from('lost_found_items')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching lost & found items:', error);
+    }
+
+    const safeItems = items || [];
 
     return (
         <>
@@ -62,10 +36,12 @@ export default async function LostFoundPage() {
                 <div className="flex-1">
                     <h1 className="font-semibold">Lost & Found</h1>
                 </div>
-                <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Report Item
-                </Button>
+                <Link href="/student/lost-found/new">
+                    <Button>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Report Item
+                    </Button>
+                </Link>
             </header>
 
             {/* Main Content */}
@@ -80,17 +56,12 @@ export default async function LostFoundPage() {
                 {/* Filter Tabs */}
                 <div className="flex flex-wrap gap-2 mb-6">
                     <Button variant="secondary" size="sm">
-                        All ({items.length})
+                        All ({safeItems.length})
                     </Button>
-                    <Button variant="ghost" size="sm">
-                        Lost ({items.filter((i) => i.type === 'lost').length})
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                        Found ({items.filter((i) => i.type === 'found').length})
-                    </Button>
+                    {/* Simplified filters for now - could be client-side filtered later */}
                 </div>
 
-                {items.length === 0 ? (
+                {safeItems.length === 0 ? (
                     <Card>
                         <CardContent className="flex flex-col items-center justify-center py-16">
                             <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-4">
@@ -100,19 +71,25 @@ export default async function LostFoundPage() {
                             <p className="text-muted-foreground text-center mb-4">
                                 No lost or found items have been reported yet.
                             </p>
-                            <Button>
-                                <Plus className="mr-2 h-4 w-4" />
-                                Report an Item
-                            </Button>
+                            <Link href="/student/lost-found/new">
+                                <Button>
+                                    <Plus className="mr-2 h-4 w-4" />
+                                    Report an Item
+                                </Button>
+                            </Link>
                         </CardContent>
                     </Card>
                 ) : (
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {items.map((item) => (
+                        {safeItems.map((item) => (
                             <Card key={item.id} className="overflow-hidden">
-                                {/* Image placeholder */}
-                                <div className="h-40 bg-muted flex items-center justify-center">
-                                    <Package className="h-12 w-12 text-muted-foreground/50" />
+                                {/* Image placeholder or real image */}
+                                <div className="h-40 bg-muted flex items-center justify-center overflow-hidden">
+                                    {item.image_url ? (
+                                        <img src={item.image_url} alt={item.description} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <Package className="h-12 w-12 text-muted-foreground/50" />
+                                    )}
                                 </div>
 
                                 <CardContent className="p-4">
@@ -121,8 +98,8 @@ export default async function LostFoundPage() {
                                             variant={item.type === 'lost' ? 'destructive' : 'default'}
                                             className={
                                                 item.type === 'lost'
-                                                    ? 'bg-red-100 text-red-800'
-                                                    : 'bg-green-100 text-green-800'
+                                                    ? 'bg-red-100 text-red-800 hover:bg-red-200'
+                                                    : 'bg-green-100 text-green-800 hover:bg-green-200'
                                             }
                                         >
                                             {item.type === 'lost' ? 'Lost' : 'Found'}
@@ -135,10 +112,12 @@ export default async function LostFoundPage() {
                                     <p className="font-medium mb-3 line-clamp-2">{item.description}</p>
 
                                     <div className="space-y-1 text-sm text-muted-foreground">
-                                        <div className="flex items-center gap-2">
-                                            <MapPin className="h-3.5 w-3.5" />
-                                            <span>{item.location}</span>
-                                        </div>
+                                        {item.location && (
+                                            <div className="flex items-center gap-2">
+                                                <MapPin className="h-3.5 w-3.5" />
+                                                <span>{item.location}</span>
+                                            </div>
+                                        )}
                                         <div className="flex items-center gap-2">
                                             <Calendar className="h-3.5 w-3.5" />
                                             <span>{new Date(item.created_at).toLocaleDateString()}</span>
@@ -152,6 +131,8 @@ export default async function LostFoundPage() {
                                             variant="outline"
                                             size="sm"
                                             className="w-full"
+                                            // TODO: Implement claim/found functionality
+                                            disabled
                                         >
                                             {item.type === 'lost' ? 'I Found This' : 'This is Mine'}
                                         </Button>
